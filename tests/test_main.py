@@ -1249,6 +1249,18 @@ def test_where_second_scalar(t: Tensor) -> Tensor:
 
 
 @compare_all
+def test_where_first_scalar64(dummy: Tensor) -> Tensor:
+    t = ep.arange(dummy, 60).float64().reshape((3, 4, 5))
+    return ep.where(t >= 3, 2, -t)
+
+
+@compare_all
+def test_where_second_scalar64(dummy: Tensor) -> Tensor:
+    t = ep.arange(dummy, 60).float64().reshape((3, 4, 5))
+    return ep.where(t >= 3, t, 2)
+
+
+@compare_all
 def test_where_both_scalars(t: Tensor) -> Tensor:
     return ep.where(t >= 3, 2, 5)
 
@@ -1262,6 +1274,12 @@ def test_tile(t: Tensor) -> Tensor:
 def test_matmul(dummy: Tensor) -> Tensor:
     t = ep.arange(dummy, 8).float32().reshape((2, 4))
     return ep.matmul(t, t.T)
+
+
+@compare_all
+def test_matmul_operator(dummy: Tensor) -> Tensor:
+    t = ep.arange(dummy, 8).float32().reshape((2, 4))
+    return t @ t.T
 
 
 @compare_allclose(rtol=1e-6)

@@ -501,16 +501,12 @@ class TensorFlowTensor(BaseTensor):
     def float32(self: TensorType) -> TensorType:
         return self.astype(tf.float32)
 
+    def float64(self: TensorType) -> TensorType:
+        return self.astype(tf.float64)
+
     def where(self: TensorType, x: TensorOrScalar, y: TensorOrScalar) -> TensorType:
         x, y = unwrap_(x, y)
         return type(self)(tf.where(self.raw, x, y))
-
-    def matmul(self: TensorType, other: TensorType) -> TensorType:
-        if self.ndim != 2 or other.ndim != 2:
-            raise ValueError(
-                f"matmul requires both tensors to be 2D, got {self.ndim}D and {other.ndim}D"
-            )
-        return type(self)(tf.matmul(self.raw, other.raw))
 
     @common_dtype
     def __lt__(self: TensorType, other: TensorOrScalar) -> TensorType:
